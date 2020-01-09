@@ -8,9 +8,13 @@
 - dummay image : https://dummyimage.com/
 - icdon : https://material.io/resources/icons/?style=baseline
   
-## 3.단축키
+## 3.단축키 (Visual Source Code)
   - formatter : shift + alt + f
-
+  - 주석 : ctrl + /
+  
+## 4. 크롬 팁
+ - F12로 컨트롤 크기 확인 가능
+  
 ## 4. template 코드
 ```html
 <!DOCTYPE html>
