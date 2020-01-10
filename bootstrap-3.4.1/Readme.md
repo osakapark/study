@@ -6,6 +6,7 @@ https://www.youtube.com/watch?v=f3X4720aB9k&list=PLbPz1r_wDPhE9lihkaAlLmz6WPHAzV
 
 ## 목차
 * [강좌 00 : bootstrap 개발 tip](lecture00.md)
+* [강좌 06 : Bootstrap Form](lecture06.md)
 * [강좌 07 : Bootstrap 네이비게이션 만들기](lecture07.md)
 * [강좌 08 : Glyphicon과 Meterial Icon 사용하기](lecture08.md)
 * [강좌 09 : container와 grid system](lecture09.md)
