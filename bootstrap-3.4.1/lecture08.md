@@ -9,17 +9,6 @@ https://material.io/resources/icons/?style=baseline
 
 
 ```html
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewPoint content=" width-device-width, initial-scale=1">
-    <title>부트스트랩 공부</title>
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-</head>
-
 <body>
 
     <div class="text-center" style="margin-top: 20px">
@@ -35,5 +24,4 @@ https://material.io/resources/icons/?style=baseline
     <script src="js/jquery-3.4.1.js"></script>
 </body>
 
-</html>
 ```
