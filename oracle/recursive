@@ -1,4 +1,5 @@
-``` html
+# recursive
+'''
 WITH
     recur (department_id,
            parent_id,
@@ -21,4 +22,4 @@ WITH
         SEARCH DEPTH FIRST BY department_id SET order_seq
 SELECT department_id, LPAD (' ', 3 * (lvl - 1)) || department_name, lvl
   FROM recur;
-```
+'''
