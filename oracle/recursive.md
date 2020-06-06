@@ -67,7 +67,7 @@ SELECT department_id,
   FROM recur;
 ```
 
-## 생성 테이블
+## 예제 테이블
 ```
 DROP TABLE STUDY.DEPARTMENTS CASCADE CONSTRAINTS;
 
