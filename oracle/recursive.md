@@ -66,3 +66,89 @@ SELECT department_id,
        order_seq
   FROM recur;
 ```
+
+## 생성 테이블
+```
+DROP TABLE STUDY.DEPARTMENTS CASCADE CONSTRAINTS;
+
+CREATE TABLE STUDY.DEPARTMENTS
+(
+  DEPARTMENT_ID    VARCHAR2(50 BYTE),
+  DEPARTMENT_NAME  VARCHAR2(100 BYTE),
+  PARENT_ID        VARCHAR2(50 BYTE)
+)
+TABLESPACE USERS
+PCTUSED    0
+PCTFREE    10
+INITRANS   1
+MAXTRANS   255
+STORAGE    (
+            INITIAL          64K
+            NEXT             1M
+            MINEXTENTS       1
+            MAXEXTENTS       UNLIMITED
+            PCTINCREASE      0
+            BUFFER_POOL      DEFAULT
+           )
+LOGGING 
+NOCOMPRESS 
+NOCACHE;
+```
+
+```
+SET DEFINE OFF;
+Insert into STUDY.DEPARTMENTS
+   (DEPARTMENT_ID, DEPARTMENT_NAME, PARENT_ID)
+ Values
+   ('170', '생산팀', '30');
+Insert into STUDY.DEPARTMENTS
+   (DEPARTMENT_ID, DEPARTMENT_NAME)
+ Values
+   ('10', '총미기획부');
+Insert into STUDY.DEPARTMENTS
+   (DEPARTMENT_ID, DEPARTMENT_NAME, PARENT_ID)
+ Values
+   ('20', '마케팅', '10');
+Insert into STUDY.DEPARTMENTS
+   (DEPARTMENT_ID, DEPARTMENT_NAME, PARENT_ID)
+ Values
+   ('30', '구매/생산부', '10');
+Insert into STUDY.DEPARTMENTS
+   (DEPARTMENT_ID, DEPARTMENT_NAME, PARENT_ID)
+ Values
+   ('180', '건설팀', '30');
+Insert into STUDY.DEPARTMENTS
+   (DEPARTMENT_ID, DEPARTMENT_NAME, PARENT_ID)
+ Values
+   ('200', '운영팀', '30');
+Insert into STUDY.DEPARTMENTS
+   (DEPARTMENT_ID, DEPARTMENT_NAME, PARENT_ID)
+ Values
+   ('210', 'IT 지원팀', '30');
+Insert into STUDY.DEPARTMENTS
+   (DEPARTMENT_ID, DEPARTMENT_NAME, PARENT_ID)
+ Values
+   ('220', 'NOC', '30');
+Insert into STUDY.DEPARTMENTS
+   (DEPARTMENT_ID, DEPARTMENT_NAME, PARENT_ID)
+ Values
+   ('40', '인사부', '10');
+Insert into STUDY.DEPARTMENTS
+   (DEPARTMENT_ID, DEPARTMENT_NAME, PARENT_ID)
+ Values
+   ('260', '채용팀', '40');
+Insert into STUDY.DEPARTMENTS
+   (DEPARTMENT_ID, DEPARTMENT_NAME, PARENT_ID)
+ Values
+   ('50', '배송부', '10');
+Insert into STUDY.DEPARTMENTS
+   (DEPARTMENT_ID, DEPARTMENT_NAME, PARENT_ID)
+ Values
+   ('80', '영업부', '10');
+Insert into STUDY.DEPARTMENTS
+   (DEPARTMENT_ID, DEPARTMENT_NAME, PARENT_ID)
+ Values
+   ('190', '계약팀', '80');
+COMMIT;
+
+```
