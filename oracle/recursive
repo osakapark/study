@@ -1,4 +1,4 @@
-``` sql
+``` html
 WITH
     recur (department_id,
            parent_id,
