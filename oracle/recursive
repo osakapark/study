@@ -1,5 +1,6 @@
 # recursive
-'''
+```
+/* Formatted on 2020/06/06 오후 9:49:30 (QP5 v5.360) */
 WITH
     recur (department_id,
            parent_id,
@@ -20,6 +21,6 @@ WITH
            FROM departments a, recur b
           WHERE a.parent_id = b.department_id)
         SEARCH DEPTH FIRST BY department_id SET order_seq
-SELECT department_id, LPAD (' ', 3 * (lvl - 1)) || department_name, lvl
+SELECT department_id, LPAD (' ', 3 * (lvl - 1)) || department_name, lvl, order_seq
   FROM recur;
-'''
+```
