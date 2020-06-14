@@ -83,6 +83,12 @@ a.b();
 ## 4 callback
 기본적으로 함수 내부와 동일
 
+결론
+기본적으로 함수의 this와 같다
+제어권을 가진 함수가 call의 this를 명시한 경우 그에 따른다.
+개발자가 this를 바인당한 채로 callback 을 넘기면 그에 따른다.
+
+
 ### call, apply, bind 예제
 this 를 개발자가 지정
 ```
@@ -103,4 +109,71 @@ c(1,2,3);
 var d= a.bind(b,1,2);
 d(3);
 	
+```
+
+```
+var callback = function () {
+	console.dir(this);
+};
+
+var obj = {
+	a: 1,
+	b: function (cb) {
+		cb();	//이것만 보면 된다.
+	}
+};
+
+obj.b(callback);
+```
+
+```
+var callback = function () {
+	console.dir(this);
+};
+
+var obj = {
+	a: 1,
+	b: function (cb) {
+		cb();	//이것만 보면 된다.
+		cb.call(this);	//this = obj가 됨
+	}
+};
+
+obj.b(callback);
+```
+
+```
+var callback = function () {
+	console.dir(this);
+};
+
+var obj = {
+	a: 1
+};
+
+setTimeout(callback, 100);	//this 별도 처리 안함
+setTimeout(callback.bind(obj), 100); 	//this 설정
+```
+
+```
+document.body.innerHTML += '<div id="a">를 클릭해라 </div>';
+
+console.log(document);
+
+document.getElementById('a')
+	.addEventListener('click', function () {
+		console.dir(this);
+	});
+```
+
+```
+document.body.innerHTML += '<div id="a">를 클릭해라 </div>';
+var obj = {a : 1};
+
+console.log(document);
+
+document.getElementById('a')
+	.addEventListener('click', function () {
+		console.dir(this);
+	}.bind(obj));
 ```
