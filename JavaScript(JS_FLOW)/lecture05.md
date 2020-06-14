@@ -61,6 +61,7 @@ document.getElementById('a')
 $('#a').on('click', cbFunc);
 ```
 
+## 주의사항
 ```		
 var arr = [1,2,3,4,5];
 var obj = {
@@ -76,7 +77,7 @@ var obj = {
 	}
 };
 
-obj.logValues(1,2);
+obj.logValues(1,2); //메소드로 전달
 arr.forEach(obj.logValues);	//콜백함수로 전달
 arr.forEach(obj.logValues.bind(obj));	//콜백함수로 전달
 arr.forEach(obj.logValues, obj);	//콜백함수로 전달		
