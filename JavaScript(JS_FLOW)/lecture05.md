@@ -22,12 +22,12 @@ setInterval(function() {
 }, 1000);
 ```
 
-'''
+```
 var cb = function () {
 	console.log('every one second ')
 };
 setInterval(cb, 1000);
-'''
+```
 
 ## 2. 인자
 ```
@@ -38,32 +38,31 @@ arr.forEach(function (v,i) {
 }, [10,20,30,40,50]);
 console.log(entries);
 
-
 //이건 오류 
 var arr = [1,2,3,4,5];
 var  entries = [];
 arr.forEach(function (index,value) {
 	console.log(index, value);
 }, [10,20,30,40,50]);
+```
 
 
 
-
-----------------------------
-
+```
 document.body.innerHTML += '<div id="a">abc</div>';
 function cbFunc(x) {
 	console.log(this, x);
 }
+```
 
-
+```
 document.getElementById('a')
 	.addEventListener('click', cbFunc);
 
 $('#a').on('click', cbFunc);
+```
 
----
-		
+```		
 var arr = [1,2,3,4,5];
 var obj = {
 	vals : [1,2,3],
@@ -82,3 +81,4 @@ obj.logValues(1,2);
 arr.forEach(obj.logValues);	//콜백함수로 전달
 arr.forEach(obj.logValues.bind(obj));	//콜백함수로 전달
 arr.forEach(obj.logValues, obj);	//콜백함수로 전달		
+```
