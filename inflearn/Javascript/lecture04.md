@@ -83,7 +83,7 @@ a.b();
 ## 4 callback
 기본적으로 함수 내부와 동일
 
-결론
+<결론>
 1. 기본적으로 함수의 this와 같다
 2. 제어권을 가진 함수가 call의 this를 명시한 경우 그에 따른다.
 3. 개발자가 this를 바인당한 채로 callback 을 넘기면 그에 따른다.
@@ -176,4 +176,17 @@ document.getElementById('a')
 	.addEventListener('click', function () {
 		console.dir(this);
 	}.bind(obj));
+```
+
+## 5. 생성자 함수 호출시 
+instance
+
+```
+function Person (n, a) {
+	this.name= n;
+	this.age = a;
+}
+
+var gomugom = new Person ('고무곰', 30);
+console.log(gomugom);	
 ```
