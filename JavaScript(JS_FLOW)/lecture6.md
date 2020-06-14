@@ -35,8 +35,13 @@ function a() {
 		get a() { return localA;},
 		set a(v) { localA = v;},
 		get b() { return localB + localC; },
-		set b(v) { throw Error('read only');};
+		set b(v) { throw Error('read only');}
 	}
-	var obj = a();
 }
+var obj = a();
+
+obj.a;
+obj.a = 3;
+obj.b;
+//obj.b = 10; //오류
 ```
