@@ -38,7 +38,7 @@ arr.forEach(function (v,i) {
 }, [10,20,30,40,50]);
 console.log(entries);
 
-//이건 오류 
+//이건 오류 (forEach 정의를 따라야만 함..)
 var arr = [1,2,3,4,5];
 var  entries = [];
 arr.forEach(function (index,value) {
@@ -47,15 +47,14 @@ arr.forEach(function (index,value) {
 ```
 
 
-
+## 3.this
 ```
+// 이벤트객체가 callback 함수의 첫번째 인자로 무조건 들어 간다..
+
 document.body.innerHTML += '<div id="a">abc</div>';
 function cbFunc(x) {
 	console.log(this, x);
 }
-```
-
-```
 document.getElementById('a')
 	.addEventListener('click', cbFunc);
 
