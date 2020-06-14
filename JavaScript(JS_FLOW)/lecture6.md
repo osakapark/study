@@ -1,6 +1,6 @@
 #closure
 
-1.A closure is the combination of a function and the lexical environment within which that function was declared;
+1. A closure is the combination of a function and the lexical environment within which that function was declared;
 
 2. 실행컨텍스트 A와 함수 B가 콤비가 되어 무언가를 한다.
 
