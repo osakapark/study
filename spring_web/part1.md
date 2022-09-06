@@ -1,7 +1,7 @@
 # 2. 프로젝트만들기
 
 ## 2.1  start.spring.io
-![alt text](./start_spring_io.png)
+![alt text](./images/part01_start_spring_io.png)
 
 ```
 Spring Boot DevTools
