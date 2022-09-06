@@ -399,5 +399,5 @@ public class SignUpForm {
         // @formatter:on
 	}
 ```
-sign-up.html
+sign-up.html  
 ![alt text](./images/part01_csrf_view.png)
