@@ -459,3 +459,41 @@ public class AccountService {
 	////
 }
 ```
+
+# 11.  회원가입 : refactoring
+@Transactional  
+Test 에서도 @Transactional 
+
+```java
+@Transactional
+@SpringBootTest
+@AutoConfigureMockMvc
+class AccountControllerTest {
+	////
+	@DisplayName("인증 메일 확인 - 입력값 정상")
+	@Test
+	void checkEmailToken() throws Exception {
+		// @formatter:off
+        Account account = Account.builder()
+                .email("test@email.com")
+                .password("12345678")
+                .nickname("keesun")
+                .build();
+        // @formatter:on
+		Account newAccount = accountRepository.save(account);
+		newAccount.generateEmailCheckToken();
+
+		// @formatter:off
+        mockMvc.perform(get("/check-email-token")
+                .param("token", newAccount.getEmailCheckToken())
+                .param("email", newAccount.getEmail()))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeDoesNotExist("error"))
+                .andExpect(model().attributeExists("nickname"))
+                .andExpect(model().attributeExists("numberOfUser"))
+                .andExpect(view().name("account/checked-email"));
+        // @formatter:on
+	}
+	////
+}
+```
