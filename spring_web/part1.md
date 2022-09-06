@@ -387,17 +387,75 @@ public class SignUpForm {
 # 8. 회원가입 :  Refactoroing & Test
 * csrf 설정
 ```java
-	void signUpSubmit_with_wrong_input() throws Exception {
-		// @formatter:off
-        mockMvc.perform(post("/sign-up")
-                .param("nickname", "keesun")
-                .param("email", "email..")
-                .param("password", "12345")
-                .with(csrf()))
-                .andExpect(status().isOk())
-                .andExpect(view().name("account/sign-up"));
-        // @formatter:on
-	}
+void signUpSubmit_with_wrong_input() throws Exception {
+  // @formatter:off
+      mockMvc.perform(post("/sign-up")
+              .param("nickname", "keesun")
+              .param("email", "email..")
+              .param("password", "12345")
+              .with(csrf()))
+              .andExpect(status().isOk())
+              .andExpect(view().name("account/sign-up"));
+      // @formatter:on
+}
 ```
 sign-up.html  
 ![alt text](./images/part01_csrf_view.png)
+
+# 9. Password Encoder
+* hashing 알고리즘 (단방향)
+* salt : 비밀번호 + salt => hash  값 (dictionary attack 방지)
+
+```java
+@Configuration
+public class AppConfig {
+
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+	}
+}
+```
+
+* AccountService
+```java
+@Service
+@RequiredArgsConstructor
+public class AccountService {
+	////
+    private final PasswordEncoder passwordEncoder;
+
+    private Account saveNewAccount(@Valid SignUpForm signUpForm) {
+        Account account = Account.builder()
+                .email(signUpForm.getEmail())
+                .nickname(signUpForm.getNickname())
+                .password(passwordEncoder.encode(signUpForm.getPassword()))
+                .studyCreatedByWeb(true)
+                .studyEnrollmentResultByWeb(true)
+                .studyUpdatedByWeb(true)
+                .build();
+        return accountRepository.save(account);
+    }
+	////
+}
+```
+
+
+# 10.  회원가입 : 인증  mail  확인
+* repository  (현 프로젝트 기준)  
+  domain 과 동일 level 로 보고 여러 곳에서 참조  
+  대신 service/controller는  repository/domain 에서 참조 안한다.
+
+* Transactional 
+```java
+public class AccountService {
+	////
+	@Transactional
+	public void processNewAccount(SignUpForm signUpForm) {
+		Account newAccount = saveNewAccount(signUpForm);
+		newAccount.generateEmailCheckToken();
+		sendSignUpConfirmEmail(newAccount);
+	}
+	////
+}
+```
