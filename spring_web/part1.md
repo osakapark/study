@@ -13,6 +13,8 @@ Spring Security
 Spring Data JPA 
 H2 Database
 PostgreSQL Driver
+Java Mail Sender
+Validation 
 ```
 
 ## 2.2 gradle import
@@ -20,7 +22,7 @@ PostgreSQL Driver
  * Project root directory :  build.gradle's parent's folder  
 
 # 3. Account Domain
-org.myclub.domain.Account  
+org.myclub.domain.account  
 
 * @EqualsAndHashCode(of = "id")  
   => 확인하자 ===========
@@ -98,7 +100,7 @@ public class AccountControllerTest {
 }
 ```
 
-# 5.  회원가입  View
+# 5.  회원가입 : View
 
 * spring devltools :  재시작 없이 화면 반영
 * css 는 rendering  전, script는  rendering  후
@@ -159,11 +161,11 @@ public class AccountControllerTest {
 			<h2>계정 만들기</h2>
 		</div>
 		<div class="row justify-content-center">
-			<form class="needs-validation col-sm-6" action="#" th:action="@{/signup}" th:object="${signUpForm}"
+			<form class="needs-validation col-sm-6" action="#" th:action="@{/sign-up}" th:object="${signUpForm}"
 				method="post" novalidate>
 				<div class="form-group">
 					<label for="nickname">닉네임</label>
-					<input id="nickname" type="text" th:field="*{nickname}" class="form-control" placeholder="whiteship"
+					<input id="nickname" type="text" th:field="*{nickname}" class="form-control" placeholder="your name"
 						aria-describedby="nicknameHelp" required minlength="3" maxlength="20">
 					<small id="nicknameHelp" class="form-text text-muted">
 						공백없이 문자와 숫자로만 3자 이상 20자 이내로 입력하세요. 가입후에 변경할 수 있습니다.
@@ -246,4 +248,137 @@ public class AccountControllerTest {
 
 </html>
 ```
+# 6.  회원가입 : Form, Submit 검증
+
+## 6.1 profile 적용
+```java
+@Profile("local")
+@Component
+@Slf4j
+public class ConsoleMailSender implements JavaMailSender {  
  
+  @Override
+	public void send(SimpleMailMessage simpleMailMessage) throws MailException {
+		log.info(simpleMailMessage.getText());
+	}  
+
+  //other code
+}
+```
+
+applicaton.properties
+```properties
+spring.profiles.active=local
+```
+
+## 6.2 validator  적용 (Custom  검증)
+```java
+@Component
+@RequiredArgsConstructor
+public class SignUpFormValidator implements Validator {
+
+    private final AccountRepository accountRepository;
+
+    @Override
+    public boolean supports(Class<?> aClass) {
+        return aClass.isAssignableFrom(SignUpForm.class);
+    }
+
+    @Override
+    public void validate(Object object, Errors errors) {
+        SignUpForm signUpForm = (SignUpForm)object;
+        if (accountRepository.existsByEmail(signUpForm.getEmail())) {
+            errors.rejectValue("email", "invalid.email", new Object[]{signUpForm.getEmail()}, "이미 사용중인 이메일입니다.");
+        }
+
+        if (accountRepository.existsByNickname(signUpForm.getNickname())) {
+            errors.rejectValue("nickname", "invalid.nickname", new Object[]{signUpForm.getEmail()}, "이미 사용중인 닉네임입니다.");
+        }
+    }
+}
+```
+
+``` java
+@Controller
+@RequiredArgsConstructor
+public class AccountController {
+
+    private final SignUpFormValidator signUpFormValidator;
+    private final AccountRepository accountRepository;
+    private final JavaMailSender javaMailSender;
+
+    @InitBinder("signUpForm")
+    public void initBinder(WebDataBinder webDataBinder) {
+        webDataBinder.addValidators(signUpFormValidator);
+    }
+
+    @GetMapping("/sign-up")
+    public String signUpForm(Model model) {
+        model.addAttribute(new SignUpForm());
+        return "account/sign-up";
+    }
+
+    @PostMapping("/sign-up")
+    public String signUpSubmit(@Valid SignUpForm signUpForm, Errors errors) {
+        if (errors.hasErrors()) {
+            return "account/sign-up";
+        }
+
+        Account account = Account.builder()
+                .email(signUpForm.getEmail())
+                .nickname(signUpForm.getNickname())
+                .password(signUpForm.getPassword()) // TODO encoding 해야함
+                .studyCreatedByWeb(true)
+                .studyEnrollmentResultByWeb(true)
+                .studyUpdatedByWeb(true)
+                .build();
+        Account newAccount = accountRepository.save(account);
+        newAccount.generateEmailCheckToken();
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo(newAccount.getEmail());
+        mailMessage.setSubject("My Club, 회원 가입 인증");
+        mailMessage.setText("/check-email-token?token=" + newAccount.getEmailCheckToken() +
+                "&email=" + newAccount.getEmail());
+        javaMailSender.send(mailMessage);
+
+        return "redirect:/";
+    }
+
+}
+/*
+1. @RequiredArgsConstructor 
+ private filanl 변수는 생성자를 직접 만들어 줌 (private는 안만들어 줌)
+ bean 생성자 1개만 있고, 생성자가 받는 파라미터가 빈으로 등록되어 있다면 
+ spring 4.2  이후 자동 주입  (autowire  or inject 불필요)
+
+2. public String signUpSubmit(@Valid SignUpForm signUpForm, Errors errors) 
+   @ModelAttribute (@Valid  옆)  :  복합객체의 경우 생략
+*/    
+```
+
+## 6.3 SignUpForm  적용
+(공항에서 여권확인)
+```java
+@Data
+public class SignUpForm {
+
+    @NotBlank
+    @Length(min = 3, max = 20)
+    @Pattern(regexp = "^[ㄱ-ㅎ가-힣a-z0-9_-]{3,20}$")
+    private String nickname;
+
+    @Email
+    @NotBlank
+    private String email;
+
+    @NotBlank
+    @Length(min = 8, max = 50)
+    private String password;
+
+}
+
+
+```
+
+
+3.signup.html
