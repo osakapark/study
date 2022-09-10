@@ -531,3 +531,12 @@ public class AccountService {
 	}
 }	
 ```
+
+# 13. 회원가입 : 메인 navigation
+* gradle  에서는 설정 필요 없는 듯
+``` xml
+<dependency>
+	<groupId>org.thymeleaf.extras</groupId>
+	<artifactId>thymeleaf-extras-springsecurity5</artifactId>
+</dependency>
+```
