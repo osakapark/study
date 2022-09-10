@@ -497,3 +497,37 @@ class AccountControllerTest {
 	////
 }
 ```
+
+# 12. 회원 가입 : 가입 완료후 자동  login
+```java
+public class AccountService {
+	///
+	public void login(Account account) {
+		// @formatter:off
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+                account.getNickname(),
+                account.getPassword(),
+                List.of(new SimpleGrantedAuthority("ROLE_USER")));
+        // @formatter:on
+		SecurityContextHolder.getContext().setAuthentication(token);
+	}
+	////
+}	
+```
+
+* 정석적인 방법 (사용못함, 비밀번호가 encoding 되어 있어서.)
+```java
+public class AccountService {
+    private final AuthenticationManager authenticationManager;
+
+	public void login(Account account) {
+		// @formatter:off
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+                username, password);
+        // @formatter:on
+        Authentication authentication = authenticationManager.authenticate(token);
+		SecurityContext context = SecurityContextHolder.getContext();
+		context.setAuthentication(authentication);
+	}
+}	
+```
