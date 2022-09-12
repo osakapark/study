@@ -540,3 +540,23 @@ public class AccountService {
 	<artifactId>thymeleaf-extras-springsecurity5</artifactId>
 </dependency>
 ```
+
+TODO
+## 14. frontend library 
+
+```
+ cd ../resoures/static
+ npm init
+ (계속 enter)
+ yes
+  
+ 
+ npm install bootstrap
+ (node js  사전 설치)
+ npm install jquery
+ 
+ npm build
+ 
+ mvn package
+ 
+```
