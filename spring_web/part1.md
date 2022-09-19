@@ -608,12 +608,13 @@ public class AccountService {
 ## 14. frontend library 
 1. node.js install
 2. npm install  
-  build.gradle npm 관련 추가 (2.3 build.gradle  참고)
+  build.gradle npm 관련 추가 (2.3 build.gradle  참고)  
   cd ../resoures/static  
   npm init (계속  enter, 마지막에 yes)  
-  npm install bootstrap  
-  npm install jquery  
-3. gradle tasks  
+3. bootstrap, jquery install  
+   npm install bootstrap  
+   npm install jquery  
+3. gradle build
    eclipse > gradle tasks > myProject > build > build  
 4. jar  파일 실행   
    cd ../build/lib/  
