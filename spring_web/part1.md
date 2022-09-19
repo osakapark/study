@@ -664,3 +664,52 @@ https://fontawesome.com/v4/icons/
 
 //javascript 참조는 끝에 [/] 없음
 ```
+
+## 17. 인증된 사용자 정보 참조
+AccountService
+```java
+public void login(Account account) {
+	// @formatter:off
+	UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+			new UserAccount(account),  // Principal
+			account.getPassword(),
+			List.of(new SimpleGrantedAuthority("ROLE_USER")));
+	// @formatter:on
+	SecurityContextHolder.getContext().setAuthentication(token);
+}
+```
+Spring Security 의 User  정보와 domain 의 User  정보 사이의  adaptor  
+Account Property 를 들고 있는 중간 객체 필요
+```java
+@Getter
+public class UserAccount extends User {
+	private Account account;  //이름 동일
+	public UserAccount(Account account) {
+		super(account.getNickname(), account.getPassword(), List.of(new SimpleGrantedAuthority("ROLE_USER")));
+		this.account = account;
+	}
+}
+```
+
+* @AuthenticationPricipal은 SpEL을 사용해서 Principal 내부 정보에 접근할 수도 있다.
+```java
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.PARAMETER)
+@AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : account")  //account  이름 동일
+public @interface CurrentUser {
+}
+```
+
+```java
+@Controller
+public class MainController {
+    @GetMapping("/")
+    public String home(@CurrentUser Account account, Model model) {
+        if (account != null) {
+            model.addAttribute(account);
+        }
+
+        return "index";
+    }
+}
+```
