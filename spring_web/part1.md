@@ -651,6 +651,7 @@ fragments.html
 font awesome, jdenticon  설치  
  * npm install font-awesome
  * npm install jdenticon
+ * gradle build
 
 https://fontawesome.com/v4/icons/  
 (현재 npm 은 fontAwesome 4.x 지원 )
