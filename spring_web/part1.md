@@ -714,3 +714,21 @@ public class MainController {
     }
 }
 ```
+
+## 18. 가입확인 메일
+```java
+@GetMapping("/resend-confirm-email")
+public String resendConfirmEmail(@CurrentUser Account account, Model model) {
+	if (!account.canSendConfirmEmail()) {
+		model.addAttribute("error", "인증 이메일은 10초에 한번만 전송할 수 있습니다.");
+		model.addAttribute("email", account.getEmail());
+		return "account/check-email";
+	}
+	account.generateEmailCheckToken();
+	accountService.sendSignUpConfirmEmail(account);
+	return "redirect:/";
+}
+```
+* redirect  
+화면 fresh 할 때마다 mail 전송 되면 안됨
+form submit에서   할때와  같은 이유
