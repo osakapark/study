@@ -625,8 +625,24 @@ public class AccountService {
 
 
 ``` 
+ (확인)
  npm build 
  mvn package
- mvnw test 
- 
+ mvnw test  
+```
+
+## 15. View 중복 제거
+fragments.html
+```html
+<footer th:fragment="footer">
+	<div class="d-flex justify-content-center">
+		<img class="mb-2" src="/images/logo_long_kr.png" alt="" width="100">
+		<small class="d-block mb-3 text-muted">&copy; 2022</small>
+	</div>
+</footer>
+```
+
+사용
+```html
+<head th:replace="fragments.html :: footer"> </head>
 ```
