@@ -21,6 +21,70 @@ Validation
  * File > Import > Gradle > Existing Gradle Project
  * Project root directory :  build.gradle's parent's folder  
 
+## 2.3 build.gradle
+```gradle 
+plugins {
+	id 'org.springframework.boot' version '2.7.3'
+	id 'io.spring.dependency-management' version '1.0.13.RELEASE'
+	id 'java'
+	id 'com.github.node-gradle.node' version "3.1.1" // npm plugin
+}
+
+group = 'org.myclub'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+	gradlePluginPortal() // https://plugins.gradle.org/m2/
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'org.postgresql:postgresql'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	testImplementation 'org.springframework.security:spring-security-test'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'com.github.node-gradle:gradle-node-plugin:3.1.1'  // npm
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+
+//npm start
+node {
+   version = '16.3.0'
+   download = true
+   nodeModulesDir = file("${projectDir}/src/main/resources/static")
+
+}
+task copyFrontLib(type: Copy) {
+   from "${projectDir}/src/main/resources/static"
+   into "${projectDir}/build/resources/main/static/."
+}
+copyFrontLib.dependsOn npmInstall
+compileJava.dependsOn copyFrontLib
+//npm start
+```
+
 # 3. Account Domain
 org.myclub.domain.account  
 
@@ -541,22 +605,23 @@ public class AccountService {
 </dependency>
 ```
 
-TODO
 ## 14. frontend library 
+1. node.js install
+2. npm install  
+  build.gradle npm 관련 추가 (2.3 build.gradle  참고)
+  cd ../resoures/static  
+  npm init (계속  enter, 마지막에 yes)  
+  npm install bootstrap  
+  npm install jquery  
+3. gradle tasks  
+   eclipse > gradle tasks > myProject > build > build  
+4. jar  파일 실행   
+   cd ../build/lib/  
+   java -jar xxx-x.x.1-SNAPSHOT.jar 
+5. git  제외 해주기   
 
-```
- cd ../resoures/static
- npm init
- (계속 enter)
- yes
-  
- 
- npm install bootstrap
- (node js  사전 설치)
- npm install jquery
- 
- npm build
- 
- mvn package
- 
+
+``` 
+ npm build 
+ mvn package 
 ```
