@@ -646,3 +646,21 @@ fragments.html
 ```html
 <head th:replace="fragments.html :: footer"> </head>
 ```
+
+## 16. Update Page
+font awesome, jdenticon  설치  
+ * npm install font-awesome
+ * npm install jdenticon
+
+https://fontawesome.com/v4/icons/  
+(현재 npm 은 fontAwesome 4.x 지원 )
+
+```html
+<link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css" />
+<script src="/node_modules/jquery/dist/jquery.min.js"></script>
+<script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/node_modules/jdenticon/dist/jdenticon.min.js"></script>
+
+//javascript 참조는 끝에 [/] 없음
+```
