@@ -103,14 +103,14 @@ https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigu
 ```java
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
-
-    @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        // @formatter:off
+	@Bean
+	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		// @formatter:off
         return http.authorizeRequests()
-                .mvcMatchers("/", "/login", "/sign-up", "/check-email", "/check-email-token",
-                        "/email-login", "/check-email-login", "login-link", "/profile/*").permitAll()
+                .mvcMatchers("/", "/login", "/sign-up", "/check-email-token",
+                        "/email-login", "/check-email-login", "login-link").permitAll()
                 .mvcMatchers(HttpMethod.GET, "/profile/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -119,14 +119,15 @@ public class SecurityConfig {
                 .logout().logoutSuccessUrl("/")
                 .and().build();
         // @formatter:on
-    }
+	}
 
-    @Bean
-    WebSecurityCustomizer webSecurityCustomizer() {
-      return (web) -> web.ignoring().mvcMatchers("/node_modules/**")
-          .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
-    }
+	@Bean
+	WebSecurityCustomizer webSecurityCustomizer() {
+		return (web) -> web.ignoring().mvcMatchers("/node_modules/**")
+				.requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+	}
 }
+
 ```
 
 ## 4.2 MoreUnit 설정
@@ -732,3 +733,46 @@ public String resendConfirmEmail(@CurrentUser Account account, Model model) {
 * redirect  
 화면 fresh 할 때마다 mail 전송 되면 안됨  
 form submit에서   할때와  같은 이유
+
+
+## 19. 로그인 / 로그아웃
+
+```java
+@Service
+@RequiredArgsConstructor
+public class AccountService implements UserDetailsService {
+	
+	///
+
+	@Override
+	public UserDetails loadUserByUsername(String emailOrNickname) throws UsernameNotFoundException {
+		Account account = accountRepository.findByEmail(emailOrNickname);
+		if (account == null) {
+			account = accountRepository.findByNickname(emailOrNickname);
+		}
+		if (account == null) {
+			throw new UsernameNotFoundException(emailOrNickname);
+		}
+		return new UserAccount(account);	//principal
+	}
+}
+```
+
+```java
+@Controller
+public class MainController {
+
+	@GetMapping("/")
+	public String home(@CurrentUser Account account, Model model) {
+		if (account != null) {
+			model.addAttribute(account);
+		}
+		return "index";
+	}
+
+	@GetMapping("/login")
+	public String login() {
+		return "login";
+	}
+}
+```
