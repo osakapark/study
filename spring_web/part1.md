@@ -612,10 +612,12 @@ public class AccountService {
   cd ../resoures/static  
   npm init (계속  enter, 마지막에 yes)  
 3. bootstrap, jquery install  
-   npm install bootstrap  
+   npm install bootstrap  (proper 는  bootstrap 에 포함)  
    npm install jquery  
+   
 3. gradle build
    eclipse > gradle tasks > myProject > build > build  
+   (build => npm install  의미)
 4. jar  파일 실행   
    cd ../build/lib/  
    java -jar xxx-x.x.1-SNAPSHOT.jar 
@@ -624,5 +626,7 @@ public class AccountService {
 
 ``` 
  npm build 
- mvn package 
+ mvn package
+ mvnw test 
+ 
 ```
