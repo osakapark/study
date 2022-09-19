@@ -730,5 +730,5 @@ public String resendConfirmEmail(@CurrentUser Account account, Model model) {
 }
 ```
 * redirect  
-화면 fresh 할 때마다 mail 전송 되면 안됨
+화면 fresh 할 때마다 mail 전송 되면 안됨  
 form submit에서   할때와  같은 이유
