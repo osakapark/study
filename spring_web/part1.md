@@ -776,3 +776,14 @@ public class MainController {
 	}
 }
 ```
+
+PasswordEncoder  자동 처리
+```java
+public class AppConfig {
+
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+	}
+}
+```
