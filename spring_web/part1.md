@@ -787,3 +787,95 @@ public class AppConfig {
 	}
 }
 ```
+
+## 20. login / logout test
+```java
+/*
+junit5 는 아래 방식 불가
+	@RequiredArgsConstructor
+ 	private final MockMvc mockMvc
+*/
+
+@SpringBootTest
+@AutoConfigureMockMvc
+class MainControllerTest {
+
+	@Autowired
+	MockMvc mockMvc;
+	@Autowired
+	AccountService accountService;
+	@Autowired
+	AccountRepository accountRepository;
+
+	@BeforeEach
+	void beforeEach() {
+		// @formatter:off
+        SignUpForm signUpForm = new SignUpForm();
+        signUpForm.setNickname("keesun");
+        signUpForm.setEmail("keesun@email.com");
+        signUpForm.setPassword("12345678");
+        accountService.processNewAccount(signUpForm);
+        // @formatter:on
+	}
+
+	@AfterEach
+	void afterEach() {
+		accountRepository.deleteAll();
+	}
+
+	@DisplayName("이메일로 로그인 성공")
+	@Test
+	void login_with_email() throws Exception {
+		// @formatter:off
+        mockMvc.perform(post("/login")
+                .param("username", "keesun@email.com")
+                .param("password", "12345678")
+                .with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/"))
+                .andExpect(authenticated().withUsername("keesun"));
+        // @formatter:on
+	}
+
+	@DisplayName("nickname 로그인 성공")
+	@Test
+	void login_with_nickname() throws Exception {
+		// @formatter:off
+        mockMvc.perform(post("/login")
+                .param("username", "keesun")
+                .param("password", "12345678")
+                .with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/"))
+                .andExpect(authenticated().withUsername("keesun"));
+        // @formatter:on
+	}
+
+	@DisplayName("로그인 실패")
+	@Test
+	void login_fail() throws Exception {
+		// @formatter:off
+        mockMvc.perform(post("/login")
+                .param("username", "111111")
+                .param("password", "000000000")
+                .with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/login?error"))
+                .andExpect(unauthenticated());
+        // @formatter:on
+	}
+
+	@WithMockUser
+	@DisplayName("로그아웃")
+	@Test
+	void logout() throws Exception {
+		// @formatter:off
+        mockMvc.perform(post("/logout")
+                .with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/"))
+                .andExpect(unauthenticated());
+        // @formatter:on
+	}
+}
+```
