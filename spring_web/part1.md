@@ -790,12 +790,6 @@ public class AppConfig {
 
 ## 20. login / logout test
 ```java
-/*
-junit5 는 아래 방식 불가
-	@RequiredArgsConstructor
- 	private final MockMvc mockMvc
-*/
-
 @SpringBootTest
 @AutoConfigureMockMvc
 class MainControllerTest {
@@ -878,4 +872,10 @@ class MainControllerTest {
         // @formatter:on
 	}
 }
+
+/*
+junit5 는 아래 방식 불가
+	@RequiredArgsConstructor
+ 	private final MockMvc mockMvc
+*/
 ```
