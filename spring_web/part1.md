@@ -619,7 +619,7 @@ public class AccountService {
 </dependency>
 ```
 
-## 14. frontend library 
+# 14. frontend library 
 1. node.js install
 2. npm install  
   build.gradle npm 관련 추가 (2.3 build.gradle  참고)  
@@ -645,7 +645,7 @@ public class AccountService {
  mvnw test  
 ```
 
-## 15. View 중복 제거
+# 15. View 중복 제거
 fragments.html
 ```html
 <footer th:fragment="footer">
@@ -661,7 +661,7 @@ fragments.html
 <head th:replace="fragments.html :: footer"> </head>
 ```
 
-## 16. Update Page
+# 16. Update Page
 font awesome, jdenticon  설치  
  * npm install font-awesome
  * npm install jdenticon
@@ -680,7 +680,7 @@ https://fontawesome.com/v4/icons/
 //javascript 참조는 끝에 [/] 없음
 ```
 
-## 17. 인증된 사용자 정보 참조
+# 17. 인증된 사용자 정보 참조
 AccountService
 ```java
 public void login(Account account) {
@@ -729,7 +729,7 @@ public class MainController {
 }
 ```
 
-## 18. 가입확인 메일
+# 18. 가입확인 메일
 ```java
 @GetMapping("/resend-confirm-email")
 public String resendConfirmEmail(@CurrentUser Account account, Model model) {
@@ -748,7 +748,7 @@ public String resendConfirmEmail(@CurrentUser Account account, Model model) {
 form submit에서   할때와  같은 이유
 
 
-## 19. 로그인 / 로그아웃
+# 19. 로그인 / 로그아웃
 
 ```java
 @Service
@@ -801,7 +801,7 @@ public class AppConfig {
 }
 ```
 
-## 20. login / logout test
+# 20. login / logout test
 ```java
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -894,7 +894,7 @@ junit5 는 아래 방식 불가
 ```
 
 
-##  21. Remember Me
+# 21. Remember Me
 ![alt text](./images/part01_rememberme.png)
 
 * SecurityConfig 설정 확인
