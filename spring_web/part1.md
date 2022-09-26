@@ -895,6 +895,8 @@ junit5 는 아래 방식 불가
 
 
 ##  21. Remember Me
+![alt text](./images/part01_rememberme.png)
+
 * SecurityConfig 설정 확인
 * PersistentLogins
   
