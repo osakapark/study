@@ -105,6 +105,9 @@ https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigu
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+	private final AccountService accountService;
+	private final DataSource dataSource;
+
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		// @formatter:off
@@ -117,8 +120,18 @@ public class SecurityConfig {
                 .formLogin().loginPage("/login").permitAll()
                 .and()
                 .logout().logoutSuccessUrl("/")
+                .and().rememberMe()
+                .userDetailsService(accountService)
+                .tokenRepository(tokenRepository())
                 .and().build();
         // @formatter:on
+	}
+
+	@Bean
+	PersistentTokenRepository tokenRepository() {
+		JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+		jdbcTokenRepository.setDataSource(dataSource);
+		return jdbcTokenRepository;
 	}
 
 	@Bean
@@ -878,4 +891,39 @@ junit5 는 아래 방식 불가
 	@RequiredArgsConstructor
  	private final MockMvc mockMvc
 */
+```
+
+
+##  21. Remember Me
+* SecurityConfig 설정 확인
+* PersistentLogins
+  
+ ```java
+@Table(name = "persistent_logins")
+@Entity
+@Getter
+@Setter
+public class PersistentLogins {
+
+	@Id
+	@Column(length = 64)
+	private String series;
+
+	@Column(nullable = false, length = 64)
+	private String username;
+
+	@Column(nullable = false, length = 64)
+	private String token;
+
+	@Column(name = "last_used", nullable = false, length = 64)
+	private LocalDateTime lastUsed;
+
+}
+```
+* login.html (remember-me)
+```html
+<div class="form-group form-check">
+    <input type="checkbox" class="form-check-input" id="rememberMe" name="remember-me" checked>
+    <label class="form-check-label" for="rememberMe" aria-describedby="rememberMeHelp">로그인 유지</label>
+</div>
 ```
