@@ -929,3 +929,19 @@ public class PersistentLogins {
     <label class="form-check-label" for="rememberMe" aria-describedby="rememberMeHelp">로그인 유지</label>
 </div>
 ```
+
+# 22. Profile View
+* @PathVariable 사용법
+```java
+	@GetMapping("/profile/{nickname}")
+	public String viewProfile(@PathVariable String nickname, Model model, @CurrentUser Account account) {
+		Account byNickname = accountRepository.findByNickname(nickname);
+		if (byNickname == null) {
+			throw new IllegalArgumentException(nickname + "에 해당하는 사용자가 없습니다.");
+		}
+
+		model.addAttribute(byNickname);
+		model.addAttribute("isOwner", byNickname.equals(account));
+		return "account/profile";
+	}
+```
