@@ -5,4 +5,5 @@ https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-JPA-%EC%9B%B9%EC%95%
 
 
 ## 목차
-* [Part 1 : Account 관리](part1.md)
+* [Part 1 : 회원가입 관리](part01.md)
+* [Part 2 : 계정설정](part02.md)
