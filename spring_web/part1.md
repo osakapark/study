@@ -966,3 +966,13 @@ https://getbootstrap.com/docs/5.2/components/navs-tabs/
   </div>
 </div>
 ```
+
+# 23. Open EntityManager (또는 Session) In View 필터
+JPA EntityManager(영속성 컨텍스트)를 요청을 처리하는 전체 프로세스에 바인딩 시켜주는 필터.
+* 뷰를 랜더링 할때까지 영속성 컨텍스트를 유지하기 때문에 필요한 데이터를 랜더링 하는 시점에 추가로 읽어올 수 있다. (지연 로딩, Lazy Loading)
+* 엔티티 객체 변경은 반드시 트랜잭션 안에서 할 것  
+ 그래야 트랜잭션 종료 직전 또는 필요한 시점에 변경 사항을 DB에 반영
+
+myclub 의 선택
+* 데이터 변경은 서비스 계층으로 위임해서 트랜잭션안에서 처리한다.
+* 데이터 조회는 리파지토리 또는 서비스를 사용한다.
