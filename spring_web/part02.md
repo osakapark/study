@@ -17,6 +17,7 @@ public String updateProfile(@CurrentUser Account account, @Valid Profile profile
 }
 /*
 @Valid  다음 Error  위치
+profile, error 는 자동으로 model 에 넣어 줌
 
 */
 ```
