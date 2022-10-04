@@ -165,3 +165,15 @@ class SettingsControllerTest {
     }
 }
 ```
+
+
+# 27. 프로필 이미지 변경
+## 27.1 npm
+* npm install cropper
+* npm install jquery-cropper
+
+## 27.2 data url
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URLs
+* data: 라는 접두어를 가진 URL로 파일을 문서에 내장 시킬때 사용할 수 있다.
+* 이미지를 DataURL로 저장할 수 있다.
+  
