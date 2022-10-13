@@ -372,3 +372,15 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URLs
 
 </html>
 ```
+## 28.
+
+## 29.
+
+## 30. 
+
+## 31. Model Mapper
+Modelmapper
+```gradle
+	// https://mvnrepository.com/artifact/org.modelmapper/modelmapper
+	implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.1.0'
+```
