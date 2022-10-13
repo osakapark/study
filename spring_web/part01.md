@@ -62,6 +62,8 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'com.github.node-gradle:gradle-node-plugin:3.1.1'  // npm
+	// https://mvnrepository.com/artifact/org.modelmapper/modelmapper
+	implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.1.0'
 }
 
 tasks.named('test') {
