@@ -379,8 +379,42 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URLs
 ## 30. Alarm 설정
 
 ## 31. Model Mapper
-Modelmapper
+build.gradle
 ```gradle
-	// https://mvnrepository.com/artifact/org.modelmapper/modelmapper
-	implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.1.0'
+// https://mvnrepository.com/artifact/org.modelmapper/modelmapper
+implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.1.0'
+```
+
+AppConfig
+```java
+@Bean
+public ModelMapper modelMapper() {
+	ModelMapper modelMapper = new ModelMapper();
+	modelMapper.getConfiguration()
+			.setDestinationNameTokenizer(NameTokenizers.UNDERSCORE)
+			.setSourceNameTokenizer(NameTokenizers.UNDERSCORE);
+	return modelMapper;
+}
+```
+
+SettingsController
+```java
+//modelmapper 적용 후
+//Notifications class 는 bean 이 아니다
+@GetMapping(SETTINGS_NOTIFICATIONS_URL)
+public String updateNotificationsForm(@CurrentUser Account account, Model model) {
+	model.addAttribute(account);
+	model.addAttribute(modelMapper.map(account, Notifications.class));
+	return SETTINGS_NOTIFICATIONS_VIEW_NAME;
+}
+```
+
+```java
+//modelmapper 적용 전
+@GetMapping(SETTINGS_NOTIFICATIONS_URL)
+public String updateNotificationsForm(@CurrentUser Account account, Model model) {
+	model.addAttribute(account);
+	model.addAttribute(new Notifications(account));
+	return SETTINGS_NOTIFICATIONS_VIEW_NAME;
+}
 ```
