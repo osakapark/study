@@ -372,11 +372,11 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URLs
 
 </html>
 ```
-## 28.
+## 28. 패스워드 수정
 
-## 29.
+## 29. 패스워드 수정 테스트
 
-## 30. 
+## 30. Alarm 설정
 
 ## 31. Model Mapper
 Modelmapper
