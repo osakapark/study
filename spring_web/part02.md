@@ -424,21 +424,21 @@ public String updateNotificationsForm(@CurrentUser Account account, Model model)
 ## 33. 패스워드 변경
 AccountController.java
 ```java
-	@PostMapping("/email-login")
-	public String sendEmailLoginLink(String email, Model model, RedirectAttributes attributes) {
-		Account account = accountRepository.findByEmail(email);
-		if (account == null) {
-			attributes.addFlashAttribute("error", "유효한 이메일 주소가 아닙니다.");
-			return "redirect:/email-login";
-		}
+@PostMapping("/email-login")
+public String sendEmailLoginLink(String email, Model model, RedirectAttributes attributes) {
+    Account account = accountRepository.findByEmail(email);
+    if (account == null) {
+        attributes.addFlashAttribute("error", "유효한 이메일 주소가 아닙니다.");
+        return "redirect:/email-login";
+    }
 
-		if (!account.canSendConfirmEmail()) {
-			attributes.addAttribute("error", "이메일 로그인은 1시간 뒤에 사용할 수 있습니다.");
-			return "redirect:/email-login";
-		}
+    if (!account.canSendConfirmEmail()) {
+        attributes.addAttribute("error", "이메일 로그인은 1시간 뒤에 사용할 수 있습니다.");
+        return "redirect:/email-login";
+    }
 
-		accountService.sendLoginLink(account);
-		attributes.addFlashAttribute("message", "이메일 인증 메일을 발송했습니다.");
-		return "redirect:/email-login";
-	}
+    accountService.sendLoginLink(account);
+    attributes.addFlashAttribute("message", "이메일 인증 메일을 발송했습니다.");
+    return "redirect:/email-login";
+}
 ```
