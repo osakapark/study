@@ -372,13 +372,13 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URLs
 
 </html>
 ```
-## 28. 패스워드 수정
+# 28. 패스워드 수정
 
-## 29. 패스워드 수정 테스트
+# 29. 패스워드 수정 테스트
 
-## 30. Alarm 설정
+# 30. Alarm 설정
 
-## 31. Model Mapper
+# 31. Model Mapper
 build.gradle
 ```gradle
 // https://mvnrepository.com/artifact/org.modelmapper/modelmapper
@@ -420,8 +420,8 @@ public String updateNotificationsForm(@CurrentUser Account account, Model model)
 ```
 
 
-## 32. Nickname 수정
-## 33. 패스워드 변경
+# 32. Nickname 수정
+# 33. 패스워드 변경
 AccountController.java
 ```java
 @PostMapping("/email-login")
