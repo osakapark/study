@@ -166,7 +166,12 @@ fragments.html
 </style>
 ```
 
-# 37.  관심주제 조회
+
+# 37.   괸심주제 등록 기능 구현
+1. Ajax 호출 시,  csrf  토큰 전달
+* https://docs.spring.io/spring-security/reference/servlet/exploits/csrf.html#servlet-csrf-include-ajax
+
+# 38.  관심주제 조회
 
 tags.html
 ```html
@@ -197,3 +202,9 @@ public Set<Tag> getTags(Account account) {
 	return byId.orElseThrow().getTags();
 }
 ```
+
+* getOne : lazy loading
+* findById : eager fetch
+
+
+# 38.  관심주제 삭제
