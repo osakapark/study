@@ -165,3 +165,35 @@ fragments.html
 	}
 </style>
 ```
+
+# 37.  관심주제 조회
+
+tags.html
+```html
+<input name='tags-outside' class='tagify--outside col-12'
+	th:value="${#strings.listJoin(tags, ',')}" placeholder='write tags to add below'>
+```
+
+SettingsController.java
+```java
+@GetMapping(SETTINGS_TAGS_URL)
+public String updateTags(@CurrentUser Account account, Model model) {
+	model.addAttribute(account);
+	Set<Tag> tags = accountService.getTags(account);
+	model.addAttribute("tags", tags.stream().map(Tag::getTitle).collect(Collectors.toList()));
+	return SETTINGS_TAGS_VIEW_NAME;
+}
+```
+
+AccountService.java
+```java
+public void addTag(Account account, Tag tag) {
+	Optional<Account> byId = accountRepository.findById(account.getId());
+	byId.ifPresent(a -> a.getTags().add(tag));
+}
+
+public Set<Tag> getTags(Account account) {
+	Optional<Account> byId = accountRepository.findById(account.getId());
+	return byId.orElseThrow().getTags();
+}
+```
