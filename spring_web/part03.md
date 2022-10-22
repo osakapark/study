@@ -144,7 +144,7 @@ fragments.html
 	///
 	.tagify--outside {
 		border: 0;			
-		
+
 	}
 
 	.tagify--outside .tagify__input {
@@ -163,5 +163,5 @@ fragments.html
 		transition: 0s;
 		border-color: var(--tags-focus-border-color);
 	}
-	</style>
+</style>
 ```
