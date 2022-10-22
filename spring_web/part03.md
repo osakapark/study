@@ -208,3 +208,5 @@ public Set<Tag> getTags(Account account) {
 
 
 # 38.  관심주제 삭제
+* DB에 없는 태그라면, Bad Request로 응답하고
+* DB에 있는 태그라면  Account에서 삭제 (DB에서 태그 정보를 삭제 하는게 아니라 연관 관계만 삭제하는 것임)
