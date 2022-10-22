@@ -45,3 +45,6 @@ public class AccountTag {
 	private Tag tag;
 }
 ```
+
+# 36.  관심 주제 등룍 뷰
+* npm install @yaireo/tagify
